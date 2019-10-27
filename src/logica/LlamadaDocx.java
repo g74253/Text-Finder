@@ -51,5 +51,30 @@ public class LlamadaDocx {
               System.out.println(e);
           }
     }
+    
+    @SuppressWarnings("resource")
+	public static String docx_aux (String rut){
+    	
+        File Archivo;
+        XWPFWordExtractor extractor;
+        XWPFDocument document = null;
+        String texto_extraido;
+        try{
+        	  Archivo = new File(rut);
+              FileInputStream file = new FileInputStream(Archivo.getPath());
+              try {
+				document = new XWPFDocument(OPCPackage.open(file));
+			} catch (InvalidFormatException e) {
+				e.printStackTrace();
+			}
+              extractor = new XWPFWordExtractor(document);
+              texto_extraido = extractor.getText();
+              String text = texto_extraido.toLowerCase();
+              return text;
+          }catch(IOException e){
+              System.out.println(e);
+          }
+		return null;
+    }
 }
     

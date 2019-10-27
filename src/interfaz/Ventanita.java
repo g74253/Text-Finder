@@ -12,9 +12,10 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
-
 import javax.swing.*;
 import estructuras.LinkedList;
+import logica.LectorPDF;
+import logica.LlamadaDocx;
 
 @SuppressWarnings("serial")
 public class Ventanita extends JFrame{
@@ -51,6 +52,18 @@ public class Ventanita extends JFrame{
 						scanner = new Scanner(file);
 					} catch (FileNotFoundException e2) {
 						e2.printStackTrace();
+					}
+					if(((file.getName().substring(file.getName().length() - 5)).equals(".docx"))) {
+						scanner = new Scanner(LlamadaDocx.docx_aux(file.getPath()));
+					}
+					else if(((file.getName().substring(file.getName().length() - 4)).equals(".pdf"))) {
+						LectorPDF pdfManager = new LectorPDF();
+						pdfManager.setFilePath(file.getPath());
+						try {
+							scanner = new Scanner(pdfManager.toText());
+						} catch (IOException e1) {
+							e1.printStackTrace();
+						}
 					}
 			    	String line = scanner.next();
 			    	while(line.equals(j) == false) {
@@ -107,15 +120,15 @@ public class Ventanita extends JFrame{
 			    public void actionPerformed(ActionEvent e)
 			    {
 			    	newPanel.removeAll();
-			    	lList.insertFirst("Name");
+			    	lList.insertFirst(new File("C:\\Users\\grero\\Desktop\\prueba\\fffffff\\Documento.docx"));
 			    	int fe = lList.size();
 					for (int i = 0; i < fe; i++) {
-						JLabel var = new JLabel(lList.position(i).getData().toString());
+						JLabel var = new JLabel(((File) lList.position(i).getData()).getName());
 						var.addMouseListener(new MouseAdapter() 
 						{
 						    public void mouseClicked(MouseEvent e)
 						    {
-						    	File file = new File("C:\\Users\\grero\\eclipse-workspace\\Text Finder\\base_datos\\"+var.getText()+".txt");
+						    	File file = new File("C:\\Users\\grero\\eclipse-workspace\\Text Finder\\src\\base_de_datos\\"+var.getText());
 						    	Desktop desktop = Desktop.getDesktop();
 						    	if(file.exists())
 									try {
@@ -140,15 +153,15 @@ public class Ventanita extends JFrame{
 			    public void actionPerformed(ActionEvent e)
 			    {
 			    	newPanel.removeAll();
-			    	lList.insertFirst("Date");
+			    	lList.insertFirst(new File("C:\\Users\\grero\\Desktop\\prueba\\fffffff\\Documento.docx"));
 			    	int fe = lList.size();
 					for (int i = 0; i < fe; i++) {
-						JLabel var = new JLabel(lList.position(i).getData().toString());
+						JLabel var = new JLabel(((File) lList.position(i).getData()).getName());
 						var.addMouseListener(new MouseAdapter() 
 						{
 						    public void mouseClicked(MouseEvent e)
 						    {
-						    	File file = new File("C:\\Users\\grero\\eclipse-workspace\\Text Finder\\base_datos\\"+var.getText()+".txt");
+						    	File file = new File("C:\\Users\\grero\\eclipse-workspace\\Text Finder\\src\\base_de_datos\\"+var.getText());
 						    	Desktop desktop = Desktop.getDesktop();
 						    	if(file.exists())
 									try {
@@ -173,15 +186,15 @@ public class Ventanita extends JFrame{
 			    public void actionPerformed(ActionEvent e)
 			    {
 			    	newPanel.removeAll();
-			    	lList.insertFirst("Size");
+			    	lList.insertFirst(new File("C:\\Users\\grero\\Desktop\\prueba\\fffffff\\Documento 1.pdf"));
 			    	int fe = lList.size();
 					for (int i = 0; i < fe; i++) {
-						JLabel var = new JLabel(lList.position(i).getData().toString());
+						JLabel var = new JLabel(((File) lList.position(i).getData()).getName());
 						var.addMouseListener(new MouseAdapter() 
 						{
 						    public void mouseClicked(MouseEvent e)
 						    {
-						    	File file = new File("C:\\Users\\grero\\eclipse-workspace\\Text Finder\\base_datos\\"+var.getText()+".txt");
+						    	File file = new File("C:\\Users\\grero\\eclipse-workspace\\Text Finder\\src\\base_de_datos\\"+var.getText());
 						    	Desktop desktop = Desktop.getDesktop();
 						    	if(file.exists())
 									try {
