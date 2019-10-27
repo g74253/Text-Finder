@@ -31,7 +31,7 @@ public class LamadaPDF  {
            int tope = words.length;
            for(int i = 0; i < tope; i++){
                
-               Principal.addNode(words[i], file.getName());
+               Principal.addNode(words[i], file);
                
            
            }

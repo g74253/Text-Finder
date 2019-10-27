@@ -1,9 +1,11 @@
 package estructuras;
 
+import java.io.File;
+
 public class ArbolString {
 	 
     private String dato;
-    private String referencia;
+    private LinkedList referencia = new LinkedList();
     private ArbolString izquierda;
     private ArbolString derecha;
     public ArbolString raiz;
@@ -11,19 +13,20 @@ public class ArbolString {
     public ArbolString() {
         this.raiz = null;
         this.dato = "";
-        this.referencia = "";
+        this.referencia  = new LinkedList();
         this.izquierda = null;
         this.derecha = null;
     }
      
-    public ArbolString(String dato, String referencia) {
+    public ArbolString(String dato, File referencia) {
         this.dato = dato;
-        this.referencia = referencia;
+        this.referencia  = new LinkedList();
+        this.referencia.insertFirst(referencia);
         this.izquierda = null;
         this.derecha = null;
     }
  
-    public void createTree( String content, String path ) {
+    public void createTree( String content, File path ) {
        
         if( content != null ) {
             
@@ -39,12 +42,15 @@ public class ArbolString {
  
      
    
-    public void addNode(String dato, String referencia) {
+    public void addNode(String dato, File referencia) {
         if (this.dato == null) {
             this.dato = dato;
-            this.referencia = referencia;
+            this.referencia.insertFirst(referencia);
         } else {
-            if (this.dato.compareTo(dato) > 0) {
+        	if(this.dato.compareTo(dato) == 0) {
+        		this.referencia.insertFirst(referencia);
+        	}
+        	else if (this.dato.compareTo(dato) > 0) {
                 if (this.izquierda != null) {
                     this.izquierda.addNode(dato, referencia);
                 } else {
@@ -63,7 +69,7 @@ public class ArbolString {
     }
      
     public void traversePreOrder() {
-        System.out.println(this.dato+" , "+this.referencia);
+    		System.out.println(this.dato+" , "+this.referencia);
         if (this.izquierda != null) {
             this.izquierda.traversePreOrder();
         }
@@ -93,15 +99,15 @@ public class ArbolString {
         System.out.println(this.dato+" , "+this.referencia);
     }
     //public ArbolString nodo = new ArbolString();
-    public String buscar(String llave){
+    public LinkedList buscar(String llave){
        
        return buscarI(llave);
     
     }
-    public  String buscarI(String str) {
+    public  LinkedList buscarI(String str) {
         if(this.dato.equals(str)){
         	System.out.println(referencia + "  encontrada!!!");
-            return referencia + "  encontrada!!!";
+            return referencia;
         }else if(str.compareTo(this.dato) < 0){
             return izquierda == null ? null:izquierda.buscarI(str);
         
@@ -120,9 +126,9 @@ public class ArbolString {
          */
         
         ArbolString Arbol = new ArbolString();
-        Arbol.createTree("hola soy bb","hola.txt");
-        Arbol.createTree("stella va a la playa","hola.pdf");
-        Arbol.createTree("stella es mi waifu","hola.docx");
+        Arbol.createTree("hola soy bb",new File("C:\\Users\\grero\\Desktop\\Hello-1.txt"));
+        Arbol.createTree("stella va a la playa",new File("C:\\Users\\grero\\Desktop\\Hello-1.txt"));
+        Arbol.createTree("stella es mi waifu",new File("C:\\Users\\grero\\Desktop\\Hello-1.txt"));
         Arbol.traversePreOrder();
         Arbol.buscar("stella");
     }

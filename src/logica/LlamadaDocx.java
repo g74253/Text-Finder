@@ -20,13 +20,11 @@ public class LlamadaDocx {
     public static void docx(String rut, ArbolString Principal){
     	
         File Archivo;
-        String referencia = "";
         XWPFWordExtractor extractor;
         XWPFDocument document = null;
         String texto_extraido;
         try{
         	  Archivo = new File(rut);
-              referencia = Archivo.getName();
               FileInputStream file = new FileInputStream(Archivo.getPath());
               try {
 				document = new XWPFDocument(OPCPackage.open(file));
@@ -47,7 +45,7 @@ public class LlamadaDocx {
 
                       words[i] = words[i].replaceAll("[^\\w]", "");
                       //System.out.println(words[i]);
-                       Principal.addNode(words[i], referencia);
+                       Principal.addNode(words[i], Archivo);
               }
           }catch(IOException e){
               System.out.println(e);

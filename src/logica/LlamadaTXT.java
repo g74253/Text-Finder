@@ -26,7 +26,7 @@ public class LlamadaTXT {
                     
                     words[i] = words[i].replaceAll("[^\\w]", "");
                     //System.out.println(words[i]);
-                     Principal.addNode(words[i],Archivo.getName());
+                     Principal.addNode(words[i],Archivo);
                 }
             }
             

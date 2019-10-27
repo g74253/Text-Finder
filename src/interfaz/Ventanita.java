@@ -22,13 +22,11 @@ public class Ventanita extends JFrame{
 	LinkedList lList = new LinkedList();
 	JPanel newPanel = new JPanel();
 	
-	public Ventanita(String n) {
+	public Ventanita(LinkedList n, String j) {
 		
 		super("Text Finder");
-		
-		lList.insertFirst("yes");
-		lList.insertFirst("file2");
-		lList.insertFirst("file3");
+
+		lList = n;
 		
 		texto = new JLabel();
 		texto.setBounds(10,10,550,30);
@@ -39,13 +37,13 @@ public class Ventanita extends JFrame{
 		newPanel.setLayout(new BoxLayout(newPanel, BoxLayout.Y_AXIS));
 		int fe = lList.size();
 		for (int i = 0; i < fe; i++) {
-			JLabel var = new JLabel(lList.position(i).getData().toString());
+			JLabel var = new JLabel(((File) lList.position(i).getData()).getName());
 			var.addMouseListener(new MouseAdapter() 
 			{
 			    @SuppressWarnings("resource")
 				public void mouseClicked(MouseEvent e)
 			    {
-			    	File file = new File("C:\\Users\\grero\\eclipse-workspace\\Text Finder\\src\\base_de_datos\\"+var.getText()+".txt");
+			    	File file = new File("C:\\Users\\grero\\eclipse-workspace\\Text Finder\\src\\base_de_datos\\"+var.getText());
 			    	File lupa = new File("C:\\Users\\grero\\eclipse-workspace\\Text Finder\\lupa.txt");
 			    	Desktop desktop = Desktop.getDesktop();
 			    	Scanner scanner = null;
@@ -55,7 +53,7 @@ public class Ventanita extends JFrame{
 						e2.printStackTrace();
 					}
 			    	String line = scanner.next();
-			    	while(line.equals("world") == false) {
+			    	while(line.equals(j) == false) {
 			    		line = scanner.next();
 			    	}
 			    	String newLine = line.substring(0);

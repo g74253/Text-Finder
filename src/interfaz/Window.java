@@ -139,7 +139,7 @@ public class Window extends JFrame{
 		    public void actionPerformed(ActionEvent e)
 		    { 
 		    	if ((texto.getText()).equals("") == false) {
-		    		new Ventanita(texto.getText());
+		    		new Ventanita(tree.buscar(texto.getText()), texto.getText());
 		    		setVisible(false);
 		    		}
 		    	else {
