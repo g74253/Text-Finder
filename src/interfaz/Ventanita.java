@@ -8,7 +8,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Scanner;
+
 import javax.swing.*;
 import estructuras.LinkedList;
 
@@ -22,7 +26,7 @@ public class Ventanita extends JFrame{
 		
 		super("Text Finder");
 		
-		lList.insertFirst("file1");
+		lList.insertFirst("yes");
 		lList.insertFirst("file2");
 		lList.insertFirst("file3");
 		
@@ -38,13 +42,51 @@ public class Ventanita extends JFrame{
 			JLabel var = new JLabel(lList.position(i).getData().toString());
 			var.addMouseListener(new MouseAdapter() 
 			{
-			    public void mouseClicked(MouseEvent e)
+			    @SuppressWarnings("resource")
+				public void mouseClicked(MouseEvent e)
 			    {
-			    	File file = new File("C:\\Users\\grero\\eclipse-workspace\\Text Finder\\base_datos\\"+var.getText()+".txt");
+			    	File file = new File("C:\\Users\\grero\\eclipse-workspace\\Text Finder\\src\\base_de_datos\\"+var.getText()+".txt");
+			    	File lupa = new File("C:\\Users\\grero\\eclipse-workspace\\Text Finder\\lupa.txt");
 			    	Desktop desktop = Desktop.getDesktop();
+			    	Scanner scanner = null;
+					try {
+						scanner = new Scanner(file);
+					} catch (FileNotFoundException e2) {
+						e2.printStackTrace();
+					}
+			    	String line = scanner.next();
+			    	while(line.equals("world") == false) {
+			    		line = scanner.next();
+			    	}
+			    	String newLine = line.substring(0);
+			    	FileWriter writer = null;
+			    	while(true) {
+			    		try {
+			    		line = scanner.next();
+			    		} catch (Exception e2){
+			    			break;}
+			    		newLine = newLine + " " + line;
+			    	}
+			    	
+			    		try {
+			    			writer = new FileWriter(lupa);
+			    		} catch (IOException e2) {
+			    			e2.printStackTrace();
+			    		}
+			    		try {
+			    			writer.write(newLine);
+			    		} catch (IOException e2) {
+			    			e2.printStackTrace();
+			    		}
+			    	try {
+						writer.close();
+					} catch (IOException e2) {
+						e2.printStackTrace();
+					}
 			    	if(file.exists())
 						try {
 							desktop.open(file);
+							desktop.open(lupa);
 						} catch (IOException e1) {
 							e1.printStackTrace();
 						}

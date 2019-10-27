@@ -1,6 +1,7 @@
 package interfaz;
 
 import javax.swing.*;
+import estructuras.LinkedList;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
@@ -9,10 +10,16 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import interfaz.Ventanita;
+import logica.folderlist;
+import estructuras.ArbolString;
+import logica.LlamadaTXT;
+import logica.LamadaPDF;
+import logica.LlamadaDocx;
 
 @SuppressWarnings("serial")
 public class Window extends JFrame{
 	JLabel ex;
+	ArbolString tree = new ArbolString();
 	JTextField texto;
 	public Window(){
 		super("Text Finder");
@@ -26,20 +33,83 @@ public class Window extends JFrame{
 		    	String var = texto.getText();
 		    	File file = new File(var);
 		    	if (file.exists()) {
-		    		if(((file.getName().substring(file.getName().length() - 4)).equals(".txt")) || ((file.getName().substring(file.getName().length() - 4)).equals(".pdf")) || ((file.getName().substring(file.getName().length() - 5)).equals(".docx"))) {
+		    		if(((file.getName().substring(file.getName().length() - 4)).equals(".txt"))) {
 		    			Path copied = Paths.get("C:\\Users\\grero\\eclipse-workspace\\Text Finder\\src\\base_de_datos\\" + file.getName());
 			    	    Path originalPath = Paths.get(file.getPath());
 			    	    try {
+			    	    	LlamadaTXT.txt(file.getPath(), tree);
 							Files.copy(originalPath, copied, StandardCopyOption.REPLACE_EXISTING);
 						} catch (IOException e1) {
 							e1.printStackTrace();
 						}
 			    	    
-		    		}
-		    	}else if (file.getName().contains(".") == false) {
-		    		
+		    		}else if ((file.getName().substring(file.getName().length() - 4)).equals(".pdf")) {
+			    		Path copied = Paths.get("C:\\Users\\grero\\eclipse-workspace\\Text Finder\\src\\base_de_datos\\" + file.getName());
+			    	    Path originalPath = Paths.get(file.getPath());
+			    	    try {
+			    	    	LamadaPDF.pdf(file.getPath(), tree);
+							Files.copy(originalPath, copied, StandardCopyOption.REPLACE_EXISTING);
+						} catch (IOException e1) {
+							e1.printStackTrace();
+						}
+			    	    
+			    		
+			    	}else if ((file.getName().substring(file.getName().length() - 5)).equals(".docx")) {
+			    		Path copied = Paths.get("C:\\Users\\grero\\eclipse-workspace\\Text Finder\\src\\base_de_datos\\" + file.getName());
+			    	    Path originalPath = Paths.get(file.getPath());
+			    	    try {
+			    	    	LlamadaDocx.docx(file.getPath(), tree);
+							Files.copy(originalPath, copied, StandardCopyOption.REPLACE_EXISTING);
+						} catch (IOException e1) {
+							e1.printStackTrace();
+						}
+			    	    
+			    		
+			    	}
+			    	
+			    	else if (file.getName().contains(".") == false) {
+			    		LinkedList result = folderlist.listf(file.getPath());
+			        	result.insertl();
+			        	result.displayList();
+			        	for (int i = 0; i < result.size(); i++) {
+			        		if(((((File) result.position(i).getData()).getName().substring(((File) result.position(i).getData()).getName().length() - 4)).equals(".txt"))) {
+				    			Path copied = Paths.get("C:\\Users\\grero\\eclipse-workspace\\Text Finder\\src\\base_de_datos\\" + ((File) result.position(i).getData()).getName());
+					    	    Path originalPath = Paths.get(((File) result.position(i).getData()).getPath());
+					    	    try {
+					    	    	LlamadaTXT.txt(((File) result.position(i).getData()).getPath(), tree);
+									Files.copy(originalPath, copied, StandardCopyOption.REPLACE_EXISTING);
+								} catch (IOException e1) {
+									e1.printStackTrace();
+								}
+					    	    
+				    		}else if ((((File) result.position(i).getData()).getName().substring(((File) result.position(i).getData()).getName().length() - 4)).equals(".pdf")) {
+					    		Path copied = Paths.get("C:\\Users\\grero\\eclipse-workspace\\Text Finder\\src\\base_de_datos\\" + ((File) result.position(i).getData()).getName());
+					    	    Path originalPath = Paths.get(((File) result.position(i).getData()).getPath());
+					    	    try {
+					    	    	LamadaPDF.pdf(((File) result.position(i).getData()).getPath(), tree);
+									Files.copy(originalPath, copied, StandardCopyOption.REPLACE_EXISTING);
+								} catch (IOException e1) {
+									e1.printStackTrace();
+								}
+					    	    
+					    		
+					    	}else if ((((File) result.position(i).getData()).getName().substring(((File) result.position(i).getData()).getName().length() - 5)).equals(".docx")) {
+					    		Path copied = Paths.get("C:\\Users\\grero\\eclipse-workspace\\Text Finder\\src\\base_de_datos\\" + ((File) result.position(i).getData()).getName());
+					    	    Path originalPath = Paths.get(((File) result.position(i).getData()).getPath());
+					    	    try {
+					    	    	LlamadaDocx.docx(((File) result.position(i).getData()).getPath(), tree);
+									Files.copy(originalPath, copied, StandardCopyOption.REPLACE_EXISTING);
+								} catch (IOException e1) {
+									e1.printStackTrace();
+								}
+					    	    
+					    		
+					    	}
+			        	}
+			    	}
 		    	}
 		    	texto.setText("");
+		    	tree.traversePreOrder();
 		    		
 		    }
 		});
