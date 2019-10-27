@@ -1,5 +1,9 @@
 package estructuras;
-
+/*
+ * Estructura de lista enlazada.
+ * Source: github del profesor 
+ * @author Gretchell 
+ */
 public class LinkedList {
 	private Node head;
     private int size;
@@ -120,6 +124,32 @@ public class LinkedList {
     			}
     		} current = current.getNext();
     	}
+    }
+    public void swap(int i,int j) {
+    	if(i != j) {
+    	Node current1 = this.position(i);
+    	Node current2 = this.position(j);
+    	Node current1aux = null;
+    	if (i != 0) {
+    		current1aux = this.position(i-1);}
+    	else {
+    		current1aux = this.position(i);
+    	}
+    	Node current2aux = this.position(j-1);
+    	if (i != 0) {
+    		Node aux = current2.getNext();
+    		current1aux.setNext(current2);
+    		current2aux.setNext(current1);
+    		current2.setNext(current1.getNext());
+    		current1.setNext(aux);
+    	}else {
+    		Node aux = current2.getNext();
+    		this.head = current2;
+    		current2aux.setNext(current1);
+    		current2.setNext(current1.getNext());
+    		current1.setNext(aux);
+    		
+    	}}
     }
     
 }

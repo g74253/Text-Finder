@@ -1,5 +1,9 @@
 package logica;
-
+/*
+ * Lee el texto que se encuentra en los archivos Docx.
+ * 
+ * @author Gretchell y Marco
+ */
 import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 

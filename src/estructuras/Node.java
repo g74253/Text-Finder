@@ -1,5 +1,11 @@
 package estructuras;
 
+/*
+ * Estructura del nodo que se usa en la lista enlazada.
+ * Source: github del profesor 
+ * @author Gretchell 
+ */
+
 public class Node {
 	private Object data;
     public Node next;

@@ -1,5 +1,9 @@
 package estructuras;
-
+/*
+ * Estructura de un arbol binario de busqueda.
+ * Source: github del profesor 
+ * @author Gretchell y Marco
+ */
 import java.io.File;
 
 public class ArbolString {

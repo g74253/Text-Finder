@@ -1,5 +1,9 @@
 package logica;
-
+/*
+ * folder list hace una lista de todos los archivos que sean .txt, .docx y .pdf que se encuentran en una carpeta.
+ * 
+ * @author Gretchell
+ */
 import java.io.File;
 import estructuras.LinkedList;
 

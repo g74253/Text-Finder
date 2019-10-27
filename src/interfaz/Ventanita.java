@@ -1,5 +1,11 @@
 package interfaz;
-
+/*
+ * Ventanita es la ventana que se abre al ejecutar la busqueda de la palabra o frase en los documentos. 
+ * Esta tiene todos los documentos donde aparece la frase que se busca y tiene tres botones para el organizamiento
+ * de estos documentos segun fecha, tamano y nombre.
+ * 
+ * @author Gretchell
+ */
 import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Dimension;
@@ -16,6 +22,7 @@ import javax.swing.*;
 import estructuras.LinkedList;
 import logica.LectorPDF;
 import logica.LlamadaDocx;
+import ordenamientos.StringQuickSort;
 
 @SuppressWarnings("serial")
 public class Ventanita extends JFrame{
@@ -120,7 +127,8 @@ public class Ventanita extends JFrame{
 			    public void actionPerformed(ActionEvent e)
 			    {
 			    	newPanel.removeAll();
-			    	lList.insertFirst(new File("C:\\Users\\grero\\Desktop\\prueba\\fffffff\\Documento.docx"));
+			    	StringQuickSort sorter = new StringQuickSort();
+			    	sorter.sort(lList);
 			    	int fe = lList.size();
 					for (int i = 0; i < fe; i++) {
 						JLabel var = new JLabel(((File) lList.position(i).getData()).getName());

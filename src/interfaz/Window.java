@@ -1,5 +1,10 @@
 package interfaz;
-
+/* 
+ * Window es la ventana central de la interfaz, la cual se usa para abrir documentos, agregarlos,eliminarlos y buscarlos 
+ * de la base de datos.
+ * 
+ * @author Gretchell
+ */
 import javax.swing.*;
 import estructuras.LinkedList;
 import java.awt.event.*;

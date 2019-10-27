@@ -1,5 +1,9 @@
 package logica;
-
+/*
+ * Lee el texto que se encuentra en los archivos PDF.
+ * 
+ * @author Gretchell y Marco
+ */
 import java.io.File;
 import java.io.IOException;
 import estructuras.ArbolString;

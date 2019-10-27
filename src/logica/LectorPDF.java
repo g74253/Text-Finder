@@ -1,5 +1,9 @@
 package logica;
-
+/*
+ * Lector de archivos pdf.
+ * 
+ * @author Marco
+ */
 
 import java.io.File;
 import java.io.IOException;

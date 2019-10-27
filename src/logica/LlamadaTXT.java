@@ -1,5 +1,9 @@
 package logica;
-
+/*
+ * Lee el texto que se encuentra en los archivos txt.
+ * 
+ * @author Gretchell y Marco
+ */
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
