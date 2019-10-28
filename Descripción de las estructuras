@@ -1,0 +1,30 @@
+DESCRIPCIÓN DE LAS ESTRUCTURAS :
+
+ARBOL DE BÚSQUEDA BINARIA:
+
+para la base de extracción de palabras se utilizaron las bibliotecas de apache PDFBox y POI las cuales nos permiten analizar 
+textos .pdf y .docx respectivamente, mientras que con el caso de los txt se utiliza un bufferedReader.
+  
+este arbol es un tipico arbol de busqueda binaria, implementado con nodos que sirve como estructura principal de esta aplicación.
+tiene un tamaño indefinido y cada uno de sus nodos almacena un dato de tipo string, que viene siendo cada palabra del documento abierto
+y una referencia que es una lista del tipo ArrayList, la cual almacena el nombre,  tamaño, y fecha de creación del documento que se ha seleccionado
+esto con la finalidad de poder ordenar los resultados según los requerimientos del proyecto.
+Además dicho arbol cuenta con los siguientes métodos:
+createTree: nos crea un sub-arbol con los parámetros asignados(palabra, peso, nombre y fecha de creación) y luego llama al siguiente
+ que es addNode, el cual inserta un nodo en nuestro árbol y lo va balanceando mediante el método preconstruido de java compreTo, de esa manera
+ el valor de la variable dato, si es menor al que está como raíz pasará a la derecha(inferior alfabéticamente) o en caso contrario a
+ el lado izquierdo.
+ tambien cuenta con los métodos de impresion inOrder, posOrder y preOrder que se ejecutan tal y como va la lógica de su estandar.
+ getReference, el siguiente método nos va a devolver la fecha y hora de creación de el archivo pasado por parámetro 
+ mediante las bibliotecas java.nio.file.atribute
+ 
+ el metodo buscar nos devuelve la palabra buscada en el texto solo una vez, mientras que el método imprimeBusqueda, apoyado por el método existe 
+ nos ayuda a imprimir la palabra el numero de veces que aparece una palabra dentro del documento.
+ 
+ LINKED LIST: 
+ 
+ esta estructura se utilizó para guardar los archivos que existen dentro de la carpeta a la cual se apendan los documentos abiertos 
+ desde la aplicación. El uso de sus métodos así como de sus apuntadores la volvieron una excelente opción para resolver dicho problema 
+ y así operar de manera eficaz dichos archivos.
+ 
+ 
