@@ -20,8 +20,11 @@ import java.io.IOException;
 import java.util.Scanner;
 import javax.swing.*;
 import estructuras.LinkedList;
+import logica.Extracto;
 import logica.LectorPDF;
 import logica.LlamadaDocx;
+import ordenamientos.BubbleSort;
+import ordenamientos.Radixsort;
 import ordenamientos.StringQuickSort;
 
 @SuppressWarnings("serial")
@@ -46,12 +49,13 @@ public class Ventanita extends JFrame{
 		int fe = lList.size();
 		for (int i = 0; i < fe; i++) {
 			JLabel var = new JLabel(((File) lList.position(i).getData()).getName());
+			String k = var.getText();
 			var.addMouseListener(new MouseAdapter() 
 			{
 			    @SuppressWarnings("resource")
 				public void mouseClicked(MouseEvent e)
 			    {
-			    	File file = new File("C:\\Users\\grero\\eclipse-workspace\\Text Finder\\src\\base_de_datos\\"+var.getText());
+			    	File file = new File("C:\\Users\\grero\\eclipse-workspace\\Text Finder\\src\\base_de_datos\\"+k);
 			    	File lupa = new File("C:\\Users\\grero\\eclipse-workspace\\Text Finder\\lupa.txt");
 			    	Desktop desktop = Desktop.getDesktop();
 			    	Scanner scanner = null;
@@ -109,7 +113,8 @@ public class Ventanita extends JFrame{
 							e1.printStackTrace();
 						}
 			    }
-			});
+			}); 
+			var.setText("<html>"+var.getText()+"     ..."+Extracto.extraer(((File) lList.position(i).getData()).getPath(),j)+"...</html>");
 			newPanel.add(var);
 	    } 
 		JScrollPane scrollPane = new JScrollPane(newPanel);
@@ -132,20 +137,71 @@ public class Ventanita extends JFrame{
 			    	int fe = lList.size();
 					for (int i = 0; i < fe; i++) {
 						JLabel var = new JLabel(((File) lList.position(i).getData()).getName());
+						String k = var.getText();
 						var.addMouseListener(new MouseAdapter() 
 						{
 						    public void mouseClicked(MouseEvent e)
 						    {
-						    	File file = new File("C:\\Users\\grero\\eclipse-workspace\\Text Finder\\src\\base_de_datos\\"+var.getText());
+						    	File file = new File("C:\\Users\\grero\\eclipse-workspace\\Text Finder\\src\\base_de_datos\\"+k);
+						    	File lupa = new File("C:\\Users\\grero\\eclipse-workspace\\Text Finder\\lupa.txt");
 						    	Desktop desktop = Desktop.getDesktop();
+						    	Scanner scanner = null;
+								try {
+									scanner = new Scanner(file);
+								} catch (FileNotFoundException e2) {
+									e2.printStackTrace();
+								}
+								if(((file.getName().substring(file.getName().length() - 5)).equals(".docx"))) {
+									scanner = new Scanner(LlamadaDocx.docx_aux(file.getPath()));
+								}
+								else if(((file.getName().substring(file.getName().length() - 4)).equals(".pdf"))) {
+									LectorPDF pdfManager = new LectorPDF();
+									pdfManager.setFilePath(file.getPath());
+									try {
+										scanner = new Scanner(pdfManager.toText());
+									} catch (IOException e1) {
+										e1.printStackTrace();
+									}
+								}
+						    	String line = scanner.next();
+						    	while(line.equals(j) == false) {
+						    		line = scanner.next();
+						    	}
+						    	String newLine = line.substring(0);
+						    	FileWriter writer = null;
+						    	while(true) {
+						    		try {
+						    		line = scanner.next();
+						    		} catch (Exception e2){
+						    			break;}
+						    		newLine = newLine + " " + line;
+						    	}
+						    	
+						    		try {
+						    			writer = new FileWriter(lupa);
+						    		} catch (IOException e2) {
+						    			e2.printStackTrace();
+						    		}
+						    		try {
+						    			writer.write(newLine);
+						    		} catch (IOException e2) {
+						    			e2.printStackTrace();
+						    		}
+						    	try {
+									writer.close();
+								} catch (IOException e2) {
+									e2.printStackTrace();
+								}
 						    	if(file.exists())
 									try {
 										desktop.open(file);
+										desktop.open(lupa);
 									} catch (IOException e1) {
 										e1.printStackTrace();
 									}
 						    }
 						});
+						var.setText("<html>"+var.getText()+"     ..."+Extracto.extraer(((File) lList.position(i).getData()).getPath(),j)+"...</html>");
 						newPanel.add(var);
 				    } 
 			    	revalidate();
@@ -161,24 +217,75 @@ public class Ventanita extends JFrame{
 			    public void actionPerformed(ActionEvent e)
 			    {
 			    	newPanel.removeAll();
-			    	lList.insertFirst(new File("C:\\Users\\grero\\Desktop\\prueba\\fffffff\\Documento.docx"));
+			    	BubbleSort.bubble_srt(lList);
 			    	int fe = lList.size();
 					for (int i = 0; i < fe; i++) {
 						JLabel var = new JLabel(((File) lList.position(i).getData()).getName());
+						String k = var.getText();
 						var.addMouseListener(new MouseAdapter() 
 						{
 						    public void mouseClicked(MouseEvent e)
 						    {
-						    	File file = new File("C:\\Users\\grero\\eclipse-workspace\\Text Finder\\src\\base_de_datos\\"+var.getText());
+						    	File file = new File("C:\\Users\\grero\\eclipse-workspace\\Text Finder\\src\\base_de_datos\\"+k);
+						    	File lupa = new File("C:\\Users\\grero\\eclipse-workspace\\Text Finder\\lupa.txt");
 						    	Desktop desktop = Desktop.getDesktop();
+						    	Scanner scanner = null;
+								try {
+									scanner = new Scanner(file);
+								} catch (FileNotFoundException e2) {
+									e2.printStackTrace();
+								}
+								if(((file.getName().substring(file.getName().length() - 5)).equals(".docx"))) {
+									scanner = new Scanner(LlamadaDocx.docx_aux(file.getPath()));
+								}
+								else if(((file.getName().substring(file.getName().length() - 4)).equals(".pdf"))) {
+									LectorPDF pdfManager = new LectorPDF();
+									pdfManager.setFilePath(file.getPath());
+									try {
+										scanner = new Scanner(pdfManager.toText());
+									} catch (IOException e1) {
+										e1.printStackTrace();
+									}
+								}
+						    	String line = scanner.next();
+						    	while(line.equals(j) == false) {
+						    		line = scanner.next();
+						    	}
+						    	String newLine = line.substring(0);
+						    	FileWriter writer = null;
+						    	while(true) {
+						    		try {
+						    		line = scanner.next();
+						    		} catch (Exception e2){
+						    			break;}
+						    		newLine = newLine + " " + line;
+						    	}
+						    	
+						    		try {
+						    			writer = new FileWriter(lupa);
+						    		} catch (IOException e2) {
+						    			e2.printStackTrace();
+						    		}
+						    		try {
+						    			writer.write(newLine);
+						    		} catch (IOException e2) {
+						    			e2.printStackTrace();
+						    		}
+						    	try {
+									writer.close();
+								} catch (IOException e2) {
+									e2.printStackTrace();
+								}
 						    	if(file.exists())
 									try {
 										desktop.open(file);
+										desktop.open(lupa);
 									} catch (IOException e1) {
 										e1.printStackTrace();
 									}
 						    }
 						});
+						var.setText("<html>"+var.getText()+"     ..."+Extracto.extraer(((File) lList.position(i).getData()).getPath(),j)+"...</html>");
 						newPanel.add(var);
 				    } 
 			    	revalidate();
@@ -194,24 +301,75 @@ public class Ventanita extends JFrame{
 			    public void actionPerformed(ActionEvent e)
 			    {
 			    	newPanel.removeAll();
-			    	lList.insertFirst(new File("C:\\Users\\grero\\Desktop\\prueba\\fffffff\\Documento 1.pdf"));
+			    	Radixsort.radixsort(lList,lList.size());
 			    	int fe = lList.size();
 					for (int i = 0; i < fe; i++) {
 						JLabel var = new JLabel(((File) lList.position(i).getData()).getName());
+						String k = var.getText();
 						var.addMouseListener(new MouseAdapter() 
 						{
 						    public void mouseClicked(MouseEvent e)
 						    {
-						    	File file = new File("C:\\Users\\grero\\eclipse-workspace\\Text Finder\\src\\base_de_datos\\"+var.getText());
+						    	File file = new File("C:\\Users\\grero\\eclipse-workspace\\Text Finder\\src\\base_de_datos\\"+k);
+						    	File lupa = new File("C:\\Users\\grero\\eclipse-workspace\\Text Finder\\lupa.txt");
 						    	Desktop desktop = Desktop.getDesktop();
+						    	Scanner scanner = null;
+								try {
+									scanner = new Scanner(file);
+								} catch (FileNotFoundException e2) {
+									e2.printStackTrace();
+								}
+								if(((file.getName().substring(file.getName().length() - 5)).equals(".docx"))) {
+									scanner = new Scanner(LlamadaDocx.docx_aux(file.getPath()));
+								}
+								else if(((file.getName().substring(file.getName().length() - 4)).equals(".pdf"))) {
+									LectorPDF pdfManager = new LectorPDF();
+									pdfManager.setFilePath(file.getPath());
+									try {
+										scanner = new Scanner(pdfManager.toText());
+									} catch (IOException e1) {
+										e1.printStackTrace();
+									}
+								}
+						    	String line = scanner.next();
+						    	while(line.equals(j) == false) {
+						    		line = scanner.next();
+						    	}
+						    	String newLine = line.substring(0);
+						    	FileWriter writer = null;
+						    	while(true) {
+						    		try {
+						    		line = scanner.next();
+						    		} catch (Exception e2){
+						    			break;}
+						    		newLine = newLine + " " + line;
+						    	}
+						    	
+						    		try {
+						    			writer = new FileWriter(lupa);
+						    		} catch (IOException e2) {
+						    			e2.printStackTrace();
+						    		}
+						    		try {
+						    			writer.write(newLine);
+						    		} catch (IOException e2) {
+						    			e2.printStackTrace();
+						    		}
+						    	try {
+									writer.close();
+								} catch (IOException e2) {
+									e2.printStackTrace();
+								}
 						    	if(file.exists())
 									try {
 										desktop.open(file);
+										desktop.open(lupa);
 									} catch (IOException e1) {
 										e1.printStackTrace();
 									}
 						    }
 						});
+						var.setText("<html>"+var.getText()+"     ..."+Extracto.extraer(((File) lList.position(i).getData()).getPath(),j)+"...</html>");
 						newPanel.add(var);
 				    } 
 			    	revalidate();

@@ -3,8 +3,8 @@ package interfaz;
  * Window es la ventana central de la interfaz, la cual se usa para abrir documentos, agregarlos,eliminarlos y buscarlos 
  * de la base de datos.
  * 
- * @author Gretchell
- */
+ * @author Gretchell 
+ * */
 import javax.swing.*;
 import estructuras.LinkedList;
 import java.awt.event.*;
@@ -28,6 +28,29 @@ public class Window extends JFrame{
 	JTextField texto;
 	public Window(){
 		super("Text Finder");
+		
+		
+		LinkedList result = folderlist.listf("C:\\Users\\grero\\eclipse-workspace\\Text Finder\\src\\base_de_datos\\");
+    	result.insertl();
+    	for (int i = 0; i < result.size(); i++) {
+    		if(((((File) result.position(i).getData()).getName().substring(((File) result.position(i).getData()).getName().length() - 4)).equals(".txt"))) {
+	    	    try {
+	    	    	LlamadaTXT.txt(((File) result.position(i).getData()).getPath(), tree);
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+	    	    
+    		}else if ((((File) result.position(i).getData()).getName().substring(((File) result.position(i).getData()).getName().length() - 4)).equals(".pdf")) {
+	    		LamadaPDF.pdf(((File) result.position(i).getData()).getPath(), tree);
+	    	    
+	    		
+	    	}else if ((((File) result.position(i).getData()).getName().substring(((File) result.position(i).getData()).getName().length() - 5)).equals(".docx")) {
+	    		LlamadaDocx.docx(((File) result.position(i).getData()).getPath(), tree);
+	    	    
+	    		
+	    	}
+    	}
+		
 		
 		JButton add = new JButton("Add");  
 	    add.setBounds(100,200,100,30);
@@ -75,7 +98,6 @@ public class Window extends JFrame{
 			    	else if (file.getName().contains(".") == false) {
 			    		LinkedList result = folderlist.listf(file.getPath());
 			        	result.insertl();
-			        	result.displayList();
 			        	for (int i = 0; i < result.size(); i++) {
 			        		if(((((File) result.position(i).getData()).getName().substring(((File) result.position(i).getData()).getName().length() - 4)).equals(".txt"))) {
 				    			Path copied = Paths.get("C:\\Users\\grero\\eclipse-workspace\\Text Finder\\src\\base_de_datos\\" + ((File) result.position(i).getData()).getName());
@@ -113,9 +135,7 @@ public class Window extends JFrame{
 			        	}
 			    	}
 		    	}
-		    	texto.setText("");
-		    	tree.traversePreOrder();
-		    		
+		    	texto.setText("");		    		
 		    }
 		});
 	    add(add);
@@ -126,10 +146,23 @@ public class Window extends JFrame{
 		{
 		    public void actionPerformed(ActionEvent e)
 		    {
-		    	String var = texto.getText();
-		    	File file = new File("C:\\Users\\grero\\eclipse-workspace\\Text Finder\\src\\base_de_datos\\" + var);
-		    	if (file.exists()) {
-		    		file.delete();
+		    	File arch = new File(texto.getText());
+		    	if (arch.isDirectory()) {
+		    		LinkedList result = folderlist.listf(arch.getPath());
+		        	result.insertl();
+		        	for (int k = 0; k < result.size(); k++) {
+		        		String var = ((File) result.position(k).getData()).getName();
+				    	File file = new File("C:\\Users\\grero\\eclipse-workspace\\Text Finder\\src\\base_de_datos\\" + var);
+				    	if (file.exists()) {
+				    		file.delete();
+		        	}}
+		    	}else {
+		    		String var = arch.getName();
+			    	File file = new File("C:\\Users\\grero\\eclipse-workspace\\Text Finder\\src\\base_de_datos\\" + var);
+			    	if (file.exists()) {
+			    		file.delete();
+		    	}
+		    
 		    	}
 		    	texto.setText("");
 		    }
